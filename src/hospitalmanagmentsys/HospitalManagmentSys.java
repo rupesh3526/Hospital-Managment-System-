@@ -10,6 +10,7 @@ public class HospitalManagmentSys {
        /* dao.addPatient(p1);
         dao.viewPatients();*/
        // dao.getPatientById(2);
+       // dao.removePatient(3);
     }
 }
 

@@ -64,4 +64,19 @@ public class DaoImplementaion implements Dao{
 
 
     }
+
+    @Override
+    public void removePatient(int id) {
+        String querry ="Delete from Patient where id = ?";
+        try{
+            PreparedStatement preparedStatement=connection.prepareStatement(querry);
+            preparedStatement.setInt(1,id);
+            int result=preparedStatement.executeUpdate();
+            if(result>0){
+                System.out.println("Successfully Deleted");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
