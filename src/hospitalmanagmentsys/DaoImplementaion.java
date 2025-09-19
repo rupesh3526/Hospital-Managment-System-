@@ -35,9 +35,29 @@ public class DaoImplementaion implements Dao{
             PreparedStatement preparedStatement= connection.prepareStatement(querry);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()){
-                System.out.println(resultSet.getInt("Id")+""+resultSet.getString("Name")
-                +""+ resultSet.getInt("Age") +""+ resultSet.getString("gender"));
+                System.out.println(resultSet.getInt("Id")+" "+resultSet.getString("Name")
+                +" "+ resultSet.getInt("Age") +" "+ resultSet.getString("gender"));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @Override
+    public void getPatientById(int id) {
+        String querry = "Select * from patient where id = ? ";
+        ResultSet resultSet=null;
+        try {
+            PreparedStatement preparedStatement= connection.prepareStatement(querry);
+            preparedStatement.setInt(1,id);
+           resultSet= preparedStatement.executeQuery();
+            while (resultSet.next()){
+                System.out.println(resultSet.getInt("Id")+" "+resultSet.getString("Name")
+                        +" "+ resultSet.getInt("Age") +" "+ resultSet.getString("gender"));
+            }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

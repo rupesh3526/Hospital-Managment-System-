@@ -7,8 +7,9 @@ public class HospitalManagmentSys {
         p1.setPatientAge(10);
         p1.setPatientGender("male");
         p1.setPatientName("Rahul");
-        dao.addPatient(p1);
-        dao.viewPatients();
+       /* dao.addPatient(p1);
+        dao.viewPatients();*/
+       // dao.getPatientById(2);
     }
 }
 
