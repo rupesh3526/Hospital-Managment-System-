@@ -134,29 +134,37 @@ public class DaoImplementaion implements Dao{
     }
 
     public  void bookAppoinment(Dao dao ,Scanner scanner){
+        try {
+            connection.setAutoCommit(false); // Start transaction
 
-        System.out.println("Enter Patient Id");
-        int p_Id= scanner.nextInt();
-        System.out.println("Enter Doctor Id");
-        int d_Id= scanner.nextInt();
-        if (dao.isResultAvaliable(dao.getPatientById(p_Id)) && dao.getDoctorById(d_Id)){
+            System.out.println("Enter Patient Id");
+            int p_Id = scanner.nextInt();
+            System.out.println("Enter Doctor Id");
+            int d_Id = scanner.nextInt();
+            if (dao.isResultAvaliable(dao.getPatientById(p_Id)) && dao.getDoctorById(d_Id)) {
 
-            String querry ="Insert into appointments(patient_id,doctor_id) values(?,?)";
-            try( PreparedStatement preparedStatement= connection.prepareStatement(querry)){
-                preparedStatement.setInt(1,p_Id);
-                preparedStatement.setInt(2,d_Id);
-                preparedStatement.executeUpdate();
+                String querry = "Insert into appointments(patient_id,doctor_id) values(?,?)";
+                try (PreparedStatement preparedStatement = connection.prepareStatement(querry)) {
+                    preparedStatement.setInt(1, p_Id);
+                    preparedStatement.setInt(2, d_Id);
+                    preparedStatement.executeUpdate();
+                    connection.commit();
+                }
+            } else {
+                System.out.println("Either Doctor or Patient does not exist.");
+                connection.rollback();}
 
-            }
-            catch(SQLException e){}
 
-
-        }else {
-            System.out.println("Either Doctor or Patient does not exist.");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-
-
-
+        finally {
+            try{
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 
